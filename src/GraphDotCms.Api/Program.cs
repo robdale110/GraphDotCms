@@ -12,6 +12,7 @@ namespace GraphDotCms.Api
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                .Enrich.WithProperty("Application", "GraphDotCms.Api")
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .WriteTo.Seq(Environment.GetEnvironmentVariable("SEQ_URL") ?? "http://localhost:5341")
