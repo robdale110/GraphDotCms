@@ -1,9 +1,10 @@
+using GraphDotCms.Api.Middleware;
+using GraphDotCms.Application.Extensions;
+using GraphDotCms.Persistence.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace GraphDotCms.Api
@@ -17,24 +18,20 @@ namespace GraphDotCms.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddApplication();
+            services.AddPersistence(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
             app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllers();
             });
         }
     }
