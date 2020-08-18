@@ -1,3 +1,5 @@
+using App.Metrics.AspNetCore;
+using App.Metrics.Formatters.Prometheus;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -15,7 +17,6 @@ namespace GraphDotCms.Api
                 .Enrich.WithProperty("Application", "GraphDotCms.Api")
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.Seq(Environment.GetEnvironmentVariable("SEQ_URL") ?? "http://localhost:5341")
                 .CreateLogger();
 
             try
@@ -35,6 +36,16 @@ namespace GraphDotCms.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseMetricsWebTracking()
+                .UseMetrics(options =>
+                {
+                    options.EndpointOptions = endpointOptions =>
+                    {
+                        endpointOptions.MetricsEndpointOutputFormatter = new MetricsPrometheusTextOutputFormatter();
+                        endpointOptions.MetricsEndpointOutputFormatter = new MetricsPrometheusProtobufOutputFormatter();
+                        endpointOptions.EnvironmentInfoEndpointEnabled = false;
+                    };
+                })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

@@ -25,9 +25,9 @@ namespace GraphDotCms.Application.Values
             }
 
             public async Task<List<ValueDto>> Handle(Query request, CancellationToken cancellationToken) =>
-                _mapper.Map<List<ValueDto>>(await _context.GetCollection<Value>("Values")
+                _mapper.Map<List<ValueDto>>(await _context.GetCollection<Value>("values")
                     .Find(p => true)
-                    .ToListAsync(cancellationToken: cancellationToken));
+                    .ToListAsync(cancellationToken));
         }
     }
 }

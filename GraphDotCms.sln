@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphDotCms.Application", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphDotCms.Persistence", "src\GraphDotCms.Persistence\GraphDotCms.Persistence.csproj", "{CDC80F2A-10DF-474C-BF08-10A84909D4C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphDotCms.Domain", "src\GraphDotCms.Domain\GraphDotCms.Domain.csproj", "{2125784A-98A1-41AB-91FB-AB46F863E2F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphDotCms.Domain", "src\GraphDotCms.Domain\GraphDotCms.Domain.csproj", "{2125784A-98A1-41AB-91FB-AB46F863E2F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
